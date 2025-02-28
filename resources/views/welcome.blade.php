@@ -8,10 +8,10 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <!-- Styles -->
-        @vite(['resources/js/app.js', 'resources/css/app.css'])
+        @vite(['resources/js/app.js'])
     </head>
     <body>
-        <div class="container-fuild mt-5 text-center" id="app">
+        <div class="container m-5" id="app">
             <AppBase />
         </div>
     </body>

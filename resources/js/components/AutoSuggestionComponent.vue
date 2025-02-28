@@ -19,15 +19,17 @@ export default {
     },
 
     mounted() {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(json => {
-                json.forEach(element => {
+        axios.get('https://jsonplaceholder.typicode.com/users')
+            .then(response => {
+                response.data.forEach(element => {
                     this.options.push(element.username)
                 });
+            }).catch(()=>{
+                console.log('errors');
             })
     },
 }
 </script>
 
-<style src="@vueform/multiselect/themes/default.css"></style>
+<style src="@vueform/multiselect/themes/default.css">
+</style>
