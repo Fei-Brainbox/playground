@@ -15,7 +15,4 @@
             <AppBase />
         </div>
     </body>
-    <script>
-        {!! Vite::content('resources/js/app.js') !!}
-    </script>
 </html>
