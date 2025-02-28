@@ -22,8 +22,5 @@ export default {
     <div class="container">
         <AutoSuggestionComponent />
     </div>
-    <div class="mt-5">
-        <swiper-component />
-    </div>
 </template>
 

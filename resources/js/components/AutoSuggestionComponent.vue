@@ -1,6 +1,20 @@
 <template>
     <div>
-        <Multiselect v-model="value" :options="options" mode="tags" @select="console.log(value)" />
+        <Multiselect 
+            v-model="value" 
+            mode="tags" 
+            :options=options 
+            :close-on-select="false"
+            :create-option="true"
+            :searchable="true"
+            :max=3
+            :placeholder="placeholder"
+            ref="myMultiSelect"
+            @select="checkGroup()"
+        />
+
+        <span class="pl-4" v-if="reachMaximum">{{ this.custom_message }}</span>
+        
     </div>
 </template>
 
@@ -14,20 +28,38 @@ export default {
     data() {
         return {
             value: null,
-            options: []
+            group: [],
+            options: [],
+            reachMaximum: false,
+            custom_message: 'You can only add up to 3 groups.',
+            placeholder:'Start typing...',
         }
     },
 
     mounted() {
-        axios.get('https://jsonplaceholder.typicode.com/users')
+        axios.get('https://cblq.brainbox.test/api/groups')
             .then(response => {
-                response.data.forEach(element => {
-                    this.options.push(element.username)
-                });
+               this.group = response.data.payload.data;
+               this.group.forEach(element => {
+                    const item = {};
+                    item.value = element.code;
+                    item.label = element.name;
+                    item.id = element.id;
+
+                    this.options.push(item)
+               });
             }).catch(()=>{
                 console.log('errors');
             })
     },
+
+    methods:{
+        checkGroup() {
+            this.reachMaximum = this.value.length >= 3 ? true : false;
+
+            if(this.reachMaximum) this.$refs.myMultiSelect.close();
+        }
+    }
 }
 </script>
 
