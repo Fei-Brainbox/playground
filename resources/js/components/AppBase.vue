@@ -20,7 +20,7 @@ export default {
 </script>
 <template>
     <div class="container">
-        <AutoSuggestionComponent />
+        <swiper-component />
     </div>
 </template>
 
