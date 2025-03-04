@@ -1,4 +1,7 @@
 import './bootstrap';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 
  
 import { createApp } from 'vue';

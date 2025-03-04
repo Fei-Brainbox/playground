@@ -1,37 +1,157 @@
 <template>
-    <swiper :slides-per-view="1" :space-between="0">
-        <swiper-slide v-for="(rate, index) in this.rates" :key="index">
-            <div class="card card-rate">
-                <span class="flag">Your <span class="text-uppercase">thaaa</span> Rate</span> <!---->
+    <swiper-component
+        :modules="modules"
+        :space-between="20"
+        :initialSlide=1
+        :breakpoints="breakpoints"
+        :pagination="{
+            clickable: true,
+        }"
+        navigation
+    >
+        <swiper-slide>
+            <div class="card card-coverage">
+                <span class="badge badge-pill">Selected</span>
+                <button type="button" class="icon-help icon-help-clickable border-0"
+                    aria-label="Hint for Coverage Option" tabindex="0" data-toggle="tooltip" data-placement="top"
+                    title="This option gives you the minimum coverage required to get on the road."></button>
                 <div class="card-body">
-                    <div class="card-rate-quotes">
-                        <h1 class="quote"><sup>$</sup>{{ rate.premium_annually}}<small>/ Year</small></h1>
-                    </div> 
-                    <img width="120" height="36" src="https://cblq.brainbox.test/images/logo_brokerlink.png" 
-                        role="presentation"
-                        class="logo-provider" />
-                    <button type="button" class="btn btn-primary" tabindex="0" @click="setSelectedRate(rate, index)">
-                        Purchase Program
+                    <h2><span>Standard </span>Coverage</h2>
+                    <table class="table table-borderless table-coverages text-left">
+                        <tbody>
+                            <tr>
+                                <td><span class="icon-checkmark-black"></span></td>
+                                <td>Third party liability</td>
+                                <td>1M</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-black"></span></td>
+                                <td>Collision deductible</td>
+                                <td>$1000</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-black"></span></td>
+                                <td>Comprehensive deductible</td>
+                                <td>$1000</td>
+                            </tr>
+                            <tr class="icon-disabled">
+                                <td><span class="icon-times-disabled"></span></td>
+                                <td>Rental car coverage</td>
+                                <td>No</td>
+                            </tr>
+                            <tr class="icon-disabled">
+                                <td><span class="icon-times-disabled"></span></td>
+                                <td>Reduced glass coverage</td>
+                                <td>No</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button @click="setSelectedRate()" type="button" class="btn btn-secondary btn-block"
+                        dusk="auto-coverage-basic">
+                        <img src="https://cblq.brainbox.test/images/checkmark.svg" alt="" class="checkmark-coverages">
+                        <span>Get Basic</span>
                     </button>
                 </div>
             </div>
         </swiper-slide>
-    </swiper>
+        <swiper-slide>
+            <div class="card card-coverage card-most-popular-coverage">
+                <button type="button" class="icon-help icon-help-clickable border-0" tabindex="0" data-toggle="tooltip"
+                    data-placement="top" title="This option gives you a higher level of coverage for peace of mind."
+                    aria-label="This option gives you a higher level of coverage for peace of mind."></button>
+                <div class="card-body">
+                    <h2><span class="text-tertiary">Premium </span>Coverage</h2>
+                    <table class="table table-borderless table-coverages text-left">
+                        <tbody>
+                            <tr>
+                                <td><span class="icon-checkmark-tertiary"></span></td>
+                                <td>Third party liability</td>
+                                <td>2M</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-tertiary"></span></td>
+                                <td>Collision deductible</td>
+                                <td>$500</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-tertiary"></span></td>
+                                <td>Comprehensive deductible</td>
+                                <td>$500</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-tertiary"></span></td>
+                                <td>Rental vehicle coverage</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td><span class="icon-checkmark-tertiary"></span></td>
+                                <td>Reduced glass coverage</td>
+                                <td>Yes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <button @click="setPremiumCoverage()" type="button" class="btn btn-tertiary btn-block"
+                        dusk="auto-coverage-premium">
+                        <img src="https://cblq.brainbox.test/images/checkmark.svg" alt="" class="checkmark-coverages">
+                        <span>Get Premium</span>
+                    </button>
+                </div>
+            </div>
+        </swiper-slide>
+        <swiper-slide>
+            <div class="card card-coverage">
+                <button type="button" class="icon-help icon-help-clickable border-0"
+                    aria-label="Hint for Coverage Option" tabindex="0" data-toggle="tooltip" data-placement="top"
+                    title="This option is customized to cover your unique needs."></button>
+                <div class="card-body">
+                    <h2><span>Customized </span>Coverage</h2>
+                    <img src="https://cblq.brainbox.test/images/questions_answers_bubbles.png" width="108" height="88" role="presentation">
+                    <p class="card-coverage-hint">Let’s start question & answer to customize your coverage</p>
+                </div>
+                <div class="card-footer">
+                    <button @click="selectCustomized()" type="button" class="btn btn-primary btn-block"
+                        dusk="auto-coverage-customize">
+                        <img src="https://cblq.brainbox.test/images/checkmark.svg" alt="" class="checkmark-coverages">
+                        <span>Start to customize</span>
+                    </button>
+                </div>
+            </div>
+        </swiper-slide>
+    </swiper-component>
+    
 </template>
 <script>
-// Import Swiper Vue.js components
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
-// Import Swiper styles
-import 'swiper/css';
-
+import { Pagination, Navigation } from 'swiper/modules';
+import { Swiper as SwiperComponent, SwiperSlide } from 'swiper/vue';
 export default {
     components: {
-        Swiper,
+        SwiperComponent,
         SwiperSlide,
     },
     setup() {
-        
+        const breakpoints = {
+            320:{
+                slidesPerView: 1,
+                centeredSlides: true,
+                
+            },
+            768: {
+                slidesPerView: 1.5,
+                centeredSlides: true,
+            },
+            1024: {
+                slidesPerView: 3,
+                centeredSlides: false,
+            }
+        };
+        return {
+            breakpoints,
+            modules: [Pagination, Navigation],
+        }
     },
     data() {
         return {
@@ -39,103 +159,18 @@ export default {
         }
     },
     mounted() {
-        this.rates = [
-            {
-                "carrier_code": "TRI",
-                "carrier_name": "Trisura",
-                "premium_annually": 433,
-                "premium_monthly": 36,
-                "coverages": {
-                    "professional_liability": {
-                        "title": "Professional Liability",
-                        "cost": "122.00",
-                        "attributes": {
-                            "limit": "$10,000,000 per loss/$10,000,000 per policy period",
-                            "cost": "122",
-                            "items": [
-                                {
-                                    "title": "Professional Liability",
-                                    "limit": "$10,000,000",
-                                    "description": "each claim and aggregate"
-                                },
-                                {
-                                    "title": "Penal Legal Costs",
-                                    "limit": "$300,000",
-                                    "description": ""
-                                },
-                                {
-                                    "title": "Disciplinary Legal Costs",
-                                    "limit": "$300,000",
-                                    "description": ""
-                                }
-                            ],
-                            "label": "Plan 1"
-                        }
-                    },
-                    "general_liability": {
-                        "title": "Commercial General Liability",
-                        "cost": "136.00",
-                        "attributes": {
-                            "label": "Option 1"
-                        }
-                    },
-                    "cyber_liability": {
-                        "title": "Cyber Liability",
-                        "cost": "25.00",
-                        "attributes": {
-                            "limit": null,
-                            "cost": "25",
-                            "items": [
-                                {
-                                    "title": "1st Party Expense Coverage (TEOE.080)",
-                                    "limit": "$25,000",
-                                    "description": "Aggregate Limits of Liability"
-                                },
-                                {
-                                    "title": "3rd Party Expense Coverage (TEOE.083)",
-                                    "limit": "$23,000",
-                                    "description": "Aggregate Limits of Liability"
-                                }
-                            ],
-                            "label": "Package 1"
-                        }
-                    },
-                    "commercial_property": {
-                        "title": "Commercial Property",
-                        "cost": 150,
-                        "attributes": {
-                            "limit": "$25,000",
-                            "cost": "150",
-                            "items": [
-                                {
-                                    "title": "Contents of every description.",
-                                    "limit": "$25,000",
-                                    "description": ""
-                                }
-                            ],
-                            "label": "Package 1"
-                        }
-                    }
-                },
-                "carrier_id": 33,
-                "carrier_description": null,
-                "has_discount": false,
-                "discount": 0,
-                "group_code": "",
-                "group_name": ""
-            }
-        ]
     },
     methods: {
-        setSelectedRate() {
-            console.log('rate choosen !');
-        },
     }
 };
 </script>
 
-<style>
-.swiper-slide {
-    border: 2px solid #F8D172;
-}
+<style scoped>
+    .swiper-pagination-bullet{
+        margin: 0 10px;
+    }
+    .swiper-pagination-bullet-active{
+        background-image: url("https://cblq.brainbox.test/images/carousel_slide_control_active.svg");
+    }
+
 </style>
